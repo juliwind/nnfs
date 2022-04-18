@@ -1,7 +1,7 @@
 import numpy as np
 import nnfs
 from nnfs.datasets import spiral_data
-
+from Activation_ReLU import *
 # Dense layer
 nnfs.init()
 
@@ -17,11 +17,14 @@ class Layer_Dense:
         self.output = np.dot(inputs, self.weights) + self.biases
 
 
-# Create dataset
 X, y = spiral_data(samples=100, classes=3)
 # Create Dense layer with 2 input features and 3 output values
 dense1 = Layer_Dense(2, 3)
-# Perform a forward pass of our training data through this layer
+# Create ReLU activation (to be used with Dense layer):
+activation1 = Activation_ReLU()
+# Make a forward pass of our training data through this layer
 dense1.forward(X)
-# Let's see output of the first few samples:
-print(dense1.output[:5])
+# Forward pass through activation func.
+# Takes in output from previous layer
+activation1.forward(dense1.output)
+print(activation1.output[:5])
